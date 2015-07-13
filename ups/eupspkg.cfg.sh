@@ -49,4 +49,11 @@ install()
 	( cd build && make install; )
 	
 	install_ups
+
+	# if bin/cc is missing (as it is for gcc 4.8.5) create it, because LSST uses cc to build C files
+	if [ ! -e "$PREFIX/bin/cc" ]
+	then
+		echo "\"$PREFIX/bin/cc\" missing; create it as a link to \"$PREFIX/bin/gcc\""
+		ln "$PREFIX/bin/gcc" "$PREFIX/bin/cc"
+	fi
 }
